@@ -1,0 +1,54 @@
+body {
+  overflow: hidden;
+}
+p {
+  margin: 0;
+}
+hr {
+  border: solid 1px #fff;
+}
+.weather-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.5em;
+}
+.temp {
+  font-size: 2.5em;
+}
+.weather-info {
+  text-align: center;
+}
+.clouds {
+  width: 105px;
+  height: 105px;
+  align-self: center;
+}
+.status {
+  font-size: 1em;
+}
+.stats {
+  max-width: 390px;
+  margin: 0 auto;
+  font-size: 0.7em;
+}
+.bg-sunrise {
+  background-color: #9ca6fd;
+}
+.bg-noon {
+  background-color: #14a0c4;
+}
+.bg-sunset {
+  background-color: #ff7b82;
+}
+.bg-night {
+  background-color: #351d8b;
+}
+
+@media (max-width: 576px) {
+  .weather-info {
+    font-size: 1em;
+  }
+  .forecast {
+    font-size: 0.8em;
+  }
+}
