@@ -1,11 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyve App</title>
-</head>
-<body>
-    
-</body>
-</html>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+      <!-- stylesheet css -->
+      <link rel="stylesheet" href="css/app.css">
+      <!-- cdn library jquery -->
+      <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+          <!-- cdn font awesome -->
+      <script src="https://kit.fontawesome.com/c8105c8ce4.js" crossorigin="anonymous"></script>
+          <!-- library flowbite.css-->
+      <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+          <!-- icon tab -->
+      <!-- <link rel="icon" type="image/x-icon" href="assets/images/todo-logo.png"> -->
+      <!-- darkmode config -->
+      <script>
+          tailwind.config = {
+              darkMode: 'class'
+          }
+      </script>
+ </head>
+ <body>
+  
+
+  <div class=" max-w-sm mx-auto pt-20">
+    <div class="invisible mb-5 w-max mx-auto" id="location-info">
+      <h1 class="font-bold text-2xl mb-3 text-center">Location Info</h1>
+      <!-- latitude -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold">Latitude</span>
+        <span>:</span>
+        <span id="lat"></span>
+      </div>
+       <!-- longitude -->
+       <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold">Longitude</span>
+        <span>:</span>
+        <span id="long"></span>
+      </div>
+      <!-- location detail -->
+      <div class="font-bold text-center">
+        <span id="city-name"></span>, 
+        <span id="region-name"></span>,
+        <span id="country-name"></span>,
+        <span id="country-code"></span>
+      </div>
+    </div>
+
+    <button id="btn-get-location" class="p-5 bg-red-500 text-white w-full font-semibold rounded-md">Kiw, Klik Dong</button>
+
+  </div>
+
+
+
+
+ </body>
+ </html>
