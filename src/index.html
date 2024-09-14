@@ -31,6 +31,9 @@
   
 
   <div class=" max-w-sm mx-auto pt-20">
+    <div id="time-info" class="mb-5 w-max mx-auto">
+      <p id="local-time" class="font-bold text-2xl mb-3 text-center"></p>
+    </div>
     <!--  -->
     <div class=" mb-5 w-max mx-auto" id="location-info">
       <h1 class="font-bold text-2xl mb-3 text-center">Location Info</h1>
@@ -55,7 +58,7 @@
       </div>
     </div>
 
-    <div class=" mb-5 w-max mx-auto" id="weather-info"></div>
+    <div class=" mb-5 w-max mx-auto" id="weather-info">
       <h1 class="font-bold text-2xl mb-3 text-center">Weather Info</h1>
       <!-- temp -->
       <div class="flex items-center space-x-3 justify-center">
@@ -75,15 +78,61 @@
         <span>:</span>
         <span id="weather"></span>
       </div>
-      <!-- weather detail -->
+      <!-- weather min/max -->
        <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Detail</span>
+        <span class="font-bold">Min/Max</span>
         <span>:</span>
-        <span id="weather-detail"></span>
+        <p><span id="weather-min"></span>/<span id="weather-max"></span></p>
+
+      </div>
+    </div>
+
+    <div class=" mb-5 w-max mx-auto" id="weather-info"></div>
+      <h1 class="font-bold text-2xl mb-3 text-center">Daily Info</h1>
+      <!-- Day 1 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d1">Day 1</span>
+        <span>:</span>
+        <span id="day1"></span>
+      </div>
+        <!-- Day 2 -->
+        <div class="flex items-center space-x-3 justify-center">
+          <span class="font-bold" id="d2">Day 2</span>
+          <span>:</span>
+          <span id="day2"></span>
+        </div>
+           <!-- Day 3 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d3">Day 3</span>
+        <span>:</span>
+        <span id="day3"></span>
+      </div>
+        <!-- Day 4 -->
+        <div class="flex items-center space-x-3 justify-center">
+          <span class="font-bold" id="d4">Day 4</span>
+          <span>:</span>
+          <span id="day4"></span>
+        </div>
+          <!-- Day 5 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d5">Day 5</span>
+        <span>:</span>
+        <span id="day5"></span>
+      </div>
+         <!-- Day 6 -->
+         <div class="flex items-center space-x-3 justify-center">
+          <span class="font-bold" id="d6">Day 6</span>
+          <span>:</span>
+          <span id="day6"></span>
+        </div>
+           <!-- Day 5 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d7">Day 7</span>
+        <span>:</span>
+        <span id="day7"></span>
       </div>
     </div>
     <!-- <button id="btn-get-location" class="p-5 bg-red-500 text-white w-full font-semibold rounded-md">Kiw, Klik Dong</button> -->
-
   </div>
 
 
