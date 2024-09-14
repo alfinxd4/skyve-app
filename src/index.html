@@ -21,11 +21,17 @@
               darkMode: 'class'
           }
       </script>
+      <style>
+        h1 {
+          color : green;
+        }
+        </style>
  </head>
  <body>
   
 
   <div class=" max-w-sm mx-auto pt-20">
+    <!--  -->
     <div class=" mb-5 w-max mx-auto" id="location-info">
       <h1 class="font-bold text-2xl mb-3 text-center">Location Info</h1>
       <!-- latitude -->
@@ -49,7 +55,34 @@
       </div>
     </div>
 
-    <button id="btn-get-location" class="p-5 bg-red-500 text-white w-full font-semibold rounded-md">Kiw, Klik Dong</button>
+    <div class=" mb-5 w-max mx-auto" id="weather-info"></div>
+      <h1 class="font-bold text-2xl mb-3 text-center">Weather Info</h1>
+      <!-- temp -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold">Temperature</span>
+        <span>:</span>
+        <span id="temp"></span>
+      </div>
+            <!-- humidity -->
+            <div class="flex items-center space-x-3 justify-center">
+              <span class="font-bold">Humidity</span>
+              <span>:</span>
+              <span id="humidity"></span>
+            </div>
+       <!-- weather -->
+       <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold">Weather</span>
+        <span>:</span>
+        <span id="weather"></span>
+      </div>
+      <!-- weather detail -->
+       <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold">Detail</span>
+        <span>:</span>
+        <span id="weather-detail"></span>
+      </div>
+    </div>
+    <!-- <button id="btn-get-location" class="p-5 bg-red-500 text-white w-full font-semibold rounded-md">Kiw, Klik Dong</button> -->
 
   </div>
 
