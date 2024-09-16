@@ -1,60 +1,44 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-      <!-- stylesheet css -->
-      <link rel="stylesheet" href="css/app.css">
-      <!-- cdn library jquery -->
-      <script src="https://code.jquery.com/jquery-3.7.1.js"
-          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-          <!-- cdn font awesome -->
-      <script src="https://kit.fontawesome.com/c8105c8ce4.js" crossorigin="anonymous"></script>
-          <!-- library flowbite.css-->
-      <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
-          <!-- icon tab -->
-      <!-- <link rel="icon" type="image/x-icon" href="assets/images/todo-logo.png"> -->
-      <!-- darkmode config -->
-      <script>
-          tailwind.config = {
-              darkMode: 'class'
-          }
-      </script>
-      <style>
-        h1 {
-          color : green;
-        }
-        </style>
- </head>
- <body>
-  
+  <!-- stylesheet css -->
+  <link rel="stylesheet" href="css/app.css">
+  <!-- cdn library jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <!-- cdn font awesome -->
+  <script src="https://kit.fontawesome.com/c8105c8ce4.js" crossorigin="anonymous"></script>
+  <!-- library flowbite.css-->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+  <!-- icon tab -->
+  <!-- <link rel="icon" type="image/x-icon" href="assets/images/todo-logo.png"> -->
+  <!-- darkmode config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+</head>
 
-  <div class=" max-w-sm mx-auto pt-20">
+<body>
+  <div class="max-w-sm mx-auto pt-20">
     <div id="time-info" class="mb-5 w-max mx-auto">
       <p id="local-time" class="font-bold text-2xl mb-3 text-center"></p>
     </div>
     <!--  -->
     <div class=" mb-5 w-max mx-auto" id="location-info">
       <h1 class="font-bold text-2xl mb-3 text-center">Location Info</h1>
-      <!-- latitude -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Latitude</span>
-        <span>:</span>
-        <span id="lat"></span>
-      </div>
-       <!-- longitude -->
-       <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Longitude</span>
-        <span>:</span>
-        <span id="long"></span>
-      </div>
+  
       <!-- location detail -->
       <div class="font-bold text-center">
-        <span id="city-name"></span>, 
-        <span id="region-name"></span>,
-        <span id="country-name"></span>
-        <!-- <span id="country-code"></span> -->
+        <p>
+          <span id="city-name"></span>,
+          <span id="country-name"></span>
+        </p>
       </div>
     </div>
 
@@ -66,77 +50,134 @@
         <span>:</span>
         <span id="temp"></span>
       </div>
-            <!-- humidity -->
-            <div class="flex items-center space-x-3 justify-center">
-              <span class="font-bold">Humidity</span>
-              <span>:</span>
-              <span id="humidity"></span>
-            </div>
-       <!-- weather -->
-       <div class="flex items-center space-x-3 justify-center">
+      <!-- humidity -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold">Humidity</span>
+        <span>:</span>
+        <span id="humidity"></span>
+      </div>
+      <!-- weather -->
+      <div class="flex items-center space-x-3 justify-center">
         <span class="font-bold">Weather</span>
         <span>:</span>
         <span id="weather"></span>
       </div>
       <!-- weather min/max -->
-       <div class="flex items-center space-x-3 justify-center">
+      <div class="flex items-center space-x-3 justify-center">
         <span class="font-bold">Min/Max</span>
         <span>:</span>
-        <p><span id="weather-min"></span>/<span id="weather-max"></span></p>
+        <p><span id="min-temp"></span>/<span id="max-temp"></span></p>
 
       </div>
     </div>
 
-    <div class=" mb-5 w-max mx-auto" id="weather-info"></div>
+    <div class=" mb-5 w-max mx-auto" id="daily-info">
       <h1 class="font-bold text-2xl mb-3 text-center">Daily Info</h1>
       <!-- Day 1 -->
       <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d1">Day 1</span>
+        <span class="font-bold" id="d1"></span>
         <span>:</span>
         <span id="day1"></span>
       </div>
-        <!-- Day 2 -->
-        <div class="flex items-center space-x-3 justify-center">
-          <span class="font-bold" id="d2">Day 2</span>
-          <span>:</span>
-          <span id="day2"></span>
-        </div>
-           <!-- Day 3 -->
+      <!-- Day 2 -->
       <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d3">Day 3</span>
+        <span class="font-bold" id="d2"></span>
+        <span>:</span>
+        <span id="day2"></span>
+      </div>
+      <!-- Day 3 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d3"></span>
         <span>:</span>
         <span id="day3"></span>
       </div>
-        <!-- Day 4 -->
-        <div class="flex items-center space-x-3 justify-center">
-          <span class="font-bold" id="d4">Day 4</span>
-          <span>:</span>
-          <span id="day4"></span>
-        </div>
-          <!-- Day 5 -->
+      <!-- Day 4 -->
       <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d5">Day 5</span>
+        <span class="font-bold" id="d4"></span>
+        <span>:</span>
+        <span id="day4"></span>
+      </div>
+      <!-- Day 5 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d5"></span>
         <span>:</span>
         <span id="day5"></span>
       </div>
-         <!-- Day 6 -->
-         <div class="flex items-center space-x-3 justify-center">
-          <span class="font-bold" id="d6">Day 6</span>
-          <span>:</span>
-          <span id="day6"></span>
-        </div>
-           <!-- Day 5 -->
+      <!-- Day 6 -->
       <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d7">Day 7</span>
+        <span class="font-bold" id="d6"></span>
+        <span>:</span>
+        <span id="day6"></span>
+      </div>
+      <!-- Day 5 -->
+      <div class="flex items-center space-x-3 justify-center">
+        <span class="font-bold" id="d7"></span>
         <span>:</span>
         <span id="day7"></span>
       </div>
     </div>
+
+
+
+
+    <div id="hourly-info" class=" mb-5 w-max mx-auto">
+      <h1 class="font-bold text-2xl mb-3 text-center">Hourly Info</h1>
+       <!-- Hour 1 [now] -->
+       <div class="flex items-center space-x-3 justify-center">
+        <span id="hour1"></span>
+      </div>
+       <!-- Hour 2-->
+       <div class="flex items-center space-x-3 justify-center">
+        <span id="hour2"></span>
+      </div>
+        <!-- Hour 3-->
+        <div class="flex items-center space-x-3 justify-center">
+          <span id="hour3"></span>
+        </div>
+          <!-- Hour 4-->
+       <div class="flex items-center space-x-3 justify-center">
+        <span id="hour4"></span>
+      </div>
+          <!-- Hour 5-->
+          <div class="flex items-center space-x-3 justify-center">
+            <span id="hour5"></span>
+          </div>
+             <!-- Hour6-->
+             <div class="flex items-center space-x-3 justify-center">
+              <span id="hour6"></span>
+            </div>
+             <!-- Hour7-->
+             <div class="flex items-center space-x-3 justify-center">
+              <span id="hour7"></span>
+            </div>
+             <!-- Hour8-->
+             <div class="flex items-center space-x-3 justify-center">
+              <span id="hour8"></span>
+            </div>
+             <!-- Hour9-->
+             <div class="flex items-center space-x-3 justify-center">
+              <span id="hour9"></span>
+            </div>
+             <!-- Hour10-->
+             <div class="flex items-center space-x-3 justify-center">
+              <span id="hour10"></span>
+            </div>
+                 <!-- Hour11-->
+                 <div class="flex items-center space-x-3 justify-center">
+                  <span id="hour11"></span>
+                </div>
+                <!-- Hour12-->
+                <div class="flex items-center space-x-3 justify-center">
+                  <span id="hour12"></span>
+                </div>
+    </div>
+    
     <!-- <button id="btn-get-location" class="p-5 bg-red-500 text-white w-full font-semibold rounded-md">Kiw, Klik Dong</button> -->
   </div>
 
 
 
 
- </body>
- </html>
+</body>
+
+</html>

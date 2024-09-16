@@ -1,21 +1,17 @@
-import "../../src/css/main.css";
-
-const localTime = $("#local-time");
-
-// const getLocation = $("#btn-get-location");
-const latCoordinates = $("#lat");
-const longCoordinates = $("#long");
-const cityName = $("#city-name");
-const regionName = $("#region-name");
-const countryName = $("#country-name");
-
 // 
-const temp = $("#temp");
-const humi = $("#humidity");
-const weather = $("#weather");
-const weatherMin = $("#weather-min");
-const weatherMax = $("#weather-max");
-
+import "../../src/css/main.css";
+// 
+const localTime = $("#local-time"); // selector to display local time
+const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // Array list of day
+const cityName = $("#city-name"); // selector city name
+const countryName = $("#country-name"); // selector country name
+// 
+const temp = $("#temp"); // selector to set temperature
+const humi = $("#humidity"); // selector to set humidity
+const weather = $("#weather"); // selector to set weather
+const minTemp = $("#min-temp"); // selector to set min temperature
+const maxTemp = $("#max-temp");// selector to set max temperature
+// 
 const day1 = $("#day1");
 const day2 = $("#day2");
 const day3 = $("#day3");
@@ -24,118 +20,194 @@ const day5 = $("#day5");
 const day6 = $("#day6");
 const day7 = $("#day7");
 
-// const locationInfo = $("#location-info");
-const urlCoordinates =
-  "https://api.opencagedata.com/geocode/v1/json?key=250178f6b314472c95280f5f73d608e1";
+  
+const selectorHours = [
+  $("#hour1"), $("#hour2"), $("#hour3"), $("#hour4"), $("#hour5"), 
+  $("#hour6"), $("#hour7"), $("#hour8"), $("#hour9"), $("#hour10"), 
+  $("#hour11"), $("#hour12")
+];
 
-const urlCurrentWeather = "https://api.openweathermap.org/data/2.5/weather";
-const urlForecast = "https://api.openweathermap.org/data/2.5/forecast/daily";
-const keyWeather = "d12f1c70ff84d00a509bf50060d7af7c";
+const showTime = () =>{ // (f) to display local-time
+  const date = new Date();
+  let hours = date.getHours(); // get hours
+  let minutes =  date.getMinutes(); // get mminutes
+  let seconds = date.getSeconds(); // get second
+  hours = (hours<10) ? "0" + hours : hours;
+  minutes = (minutes<10) ? "0" + minutes : minutes;
+  seconds = (seconds<10) ? "0" + seconds : seconds;
+  let time = hours + ":" +  minutes + ":" + seconds; // display local-time
+  localTime.text(time);
+  setTimeout(showTime,1000); //setimeout
+}
 
+showTime(); //
+
+const apiGeocoding = // api Geocding
+  "https://api.opencagedata.com/geocode/v1/json";
+const keyGeocoding = "250178f6b314472c95280f5f73d608e1"; //  api key geocoding
+const apiWeather = "https://api.openweathermap.org/data/2.5"; // api open weather
+const keyWeather = "d12f1c70ff84d00a509bf50060d7af7c"; // api key open weather
+
+const apiHourlyWeather = "https://pro.openweathermap.org/data/2.5/forecast/hourly"
 // 
-const getCoordinates = (success, error) => {
-  if (navigator.geolocation) {
+const getCoordinates = (success, error) => {  // get coordinates n set callback when success or error
+  if (navigator.geolocation) {  // permission to access current location
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        success(lat, long);
+      (position) => {   // return data current position
+        const lat = position.coords.latitude; // set latitude
+        const lon = position.coords.longitude; // set longitude
+        success(lat, lon); // success callback
       },
-      (err) => {
-        console.error("Error:", err.message);
+      (err) => { // if error
+        console.error("Error:", err.message); // set & return console.error
         if (error) {
-          error(err.message);
+          error(err.message); // error callback
         }
       },
     );
   } else {
-    // Jika browser tidak mendukung geolocation
+    // if browser doesnt support geolocation
     const errorMessage = "Geolocation is not supported by this browser.";
-    console.error("Error:", errorMessage);
+    console.error("Error:", errorMessage);  // set & return console.error
     if (error) {
-      error(errorMessage); // Memanggil callback error jika disediakan
+      error(errorMessage); // error callback
     }
   }
 };
-
 // 
-const renderLocationInfo = (data) => {
-  // 
-  getCoordinates(
-    (lat, long) => {
-  latCoordinates.text(lat);
-  longCoordinates.text(long);
-})
+const forecastDays = () => { // (f) to get this day and next day
+  let today = new Date().getDay(); // get day in index result
+  for (let i = 1; i <= 7; i++) {   // Loop tp fill selector day
+    let dayIndex = (today + i - 1) % 7; // define indeks of day by sequence
+    $(`#d${i}`).text(daysOfWeek[dayIndex]);     // get selector to set value froom looping
+  }
+}
+// 
+const renderGeocoding = (data) => { // (f) to render data from api to page
+  // set city-name by api result [chrome,edge,etc]
   cityName.text(data.results[0].components.city || data.results[0].components.county );
-  regionName.text(data.results[0].components.state);
-  countryName.text(data.results[0].components.country);
+  countryName.text(data.results[0].components.country);   // set country name by api result
+// Memanggil fungsi untuk mengisi hari
+forecastDays();
 };
+// 
+const renderCurrentWeather = (data) =>{ // (f) to render data from api to page
+  weather.text(data.weather[0].main); // set current weather
+  temp.text(data.main.temp + "\u00B0C");  // set current temperature
+  humi.text(data.main.humidity + "%");  // set current humidity
+}
 
+const renderDailyForecast = (data) =>{
+  minTemp.text(Math.round(data.list[0].temp.max) + "\u00B0C");
+  maxTemp.text(Math.round(data.list[0].temp.min) + "\u00B0C")
 
-const renderWeatherInfo = (data) => {
-  temp.text(data.main.temp + "\u00B0C");
-  humi.text(data.main.humidity + "%");
-  weather.text(data.weather[0].main);
+      day1.text(Math.round(data.list[0].temp.max) + "\u00B0C" + "/" + Math.round(data.list[0].temp.min) + "\u00B0C"  + "," + data.list[0].weather[0].main);
+      day2.text(Math.round(data.list[1].temp.max) + "\u00B0C" + "/" + Math.round(data.list[1].temp.min) + "\u00B0C"  + "," + data.list[1].weather[0].main);
+      day3.text(Math.round(data.list[2].temp.max) + "\u00B0C" + "/" + Math.round(data.list[2].temp.min) + "\u00B0C"  + "," + data.list[2].weather[0].main);
+      day4.text(Math.round(data.list[3].temp.max) + "\u00B0C" + "/" + Math.round(data.list[3].temp.min) + "\u00B0C"  + "," + data.list[3].weather[0].main);
+      day5.text(Math.round(data.list[4].temp.max) + "\u00B0C" + "/" + Math.round(data.list[4].temp.min) + "\u00B0C"  + "," + data.list[4].weather[0].main);
+      day6.text(Math.round(data.list[5].temp.max) + "\u00B0C" + "/" + Math.round(data.list[5].temp.min) + "\u00B0C"  + "," + data.list[5].weather[0].main);
+      day7.text(Math.round(data.list[6].temp.max) + "\u00B0C" + "/" + Math.round(data.list[6].temp.min) + "\u00B0C"  + "," + data.list[6].weather[0].main);
 }
 
 
-  $(window).on("load",()=> {
-  getCoordinates(
-    (lat, long) => {
-      fetch(`${urlCoordinates}&q=${lat},${long}`)
+// / (f) to filter data next 12 hours based on current time
+const filterNext12HoursToday = (weatherData, currentDateString, currentHour) => {
+  // Maximum hour limit (next 12 hours or end of today)
+  const maxHourToday = Math.min(currentHour + 12, 24); // Make sure not to exceed 24:00
+
+  // Filter the weather array for only what is happening within the current hour up to a maximum of 12 hours of the current day
+  return weatherData.list.filter(data => {
+      const [date, time] = data.dt_txt.split(' '); // Separate date and time
+      const [hour] = time.split(':'); // Take only hours of time
+
+      // Filter if the date matches today and the hour is in the range from now to the next 12 hours.
+      return date === currentDateString && hour >= currentHour && hour < maxHourToday;
+  });
+};
+
+const renderHourlyForecast = (data) =>{
+
+const weatherData = data; // data api
+
+const currentTime = new Date(); // (f) date
+const currentHour = currentTime.getHours( ); // get current hour
+const currentDateString = currentTime.toISOString().slice(0, 10); // get date this day in format "YYYY-MM-DD"
+
+// Call the function to get the weather data for the next 12 hours of today
+const next12HoursDataToday = filterNext12HoursToday(weatherData, currentDateString, currentHour);
+
+// return console
+console.log(next12HoursDataToday);
+
+
+next12HoursDataToday.forEach((data, index) => {
+  if (selectorHours[index]) {
+    const time = data.dt_txt.split(' ')[1].split(':')[0]; // Ambil hanya jam dari dt_txt
+    selectorHours[index].text(`Jam: ${time}, Suhu: ${data.main.temp}°C`);
+    selectorHours[index].show(); // Tampilkan selector (jika sebelumnya disembunyikan)
+  }
+});
+
+// Sembunyikan selector yang tidak digunakan (jika output kurang dari 12)
+for (let i = next12HoursDataToday.length; i < selectorHours.length; i++) {
+  selectorHours[i].hide(); // Sembunyikan selector jika tidak ada data
+}
+
+
+}
+
+  $(window).on("load",()=> { // running every page onload
+  getCoordinates( // call getCoordinates to get latitude & longitude
+    (lat, lon) => { // set parameter
+      // fetch geocoding
+      fetch(`${apiGeocoding}?q=${lat}%2C${lon}&key=${keyGeocoding}`) // fetch api crrent weather by current location
         .then((response) => response.json())
-        .then((responseJson) => {
-          console.log(responseJson);
-          console.log(responseJson.results[0].components.city || responseJson.results[0].components.county);
-          console.log(responseJson.results[0].components.state);
-          console.log(responseJson.results[0].components.country);
-          renderLocationInfo(responseJson);
+        .then((responseJson) => { // process data api
+          renderGeocoding(responseJson); // call renderGeocoding and set data api
         })
-        .catch((error) => {
+        .catch((error) => { // if error
           console.error("Error:", error);
         });
 
-        // 
-        fetch(`${urlCurrentWeather}?lat=${lat}&lon=${long}&appid=${keyWeather}&units=metric`)
+        // fetch currentWeather
+        fetch(`${apiWeather}/weather?lat=${lat}&lon=${lon}&appid=${keyWeather}&units=metric`)
         .then((response) => response.json())
-        .then((responseJson) => {
-          console.log(responseJson);
-          console.log(responseJson.weather[0].main);
-          console.log(responseJson.weather[0].description);
-          console.log(responseJson.main.temp);
-          console.log(responseJson.main.humidity);
-          renderWeatherInfo(responseJson)
-        })
-        .catch((error) => {
+        .then((responseJson) => { // process data api
+          renderCurrentWeather(responseJson) // call renderCurrentWeather and set data api
+        }) 
+        .catch((error) => { // if error
           console.error("Error:", error);
         });
 
-
-//   
-    fetch(`${urlForecast}?lat=${lat}&lon=${long}&cnt=7&appid=${keyWeather}&units=metric`)
+    // fetch dailyForecast
+    fetch(`${apiWeather}/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${keyWeather}&units=metric`)
     .then((response) => response.json())
-    .then((responseJson) => {
-      weatherMin.text(Math.round(responseJson.list[0].temp.max) + "\u00B0C");
-      weatherMax.text(Math.round(responseJson.list[0].temp.min) + "\u00B0C")
+    .then((responseJson) => { // process data api
+      renderDailyForecast(responseJson); // call renderDailyForecast and set data api
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-      day1.text(Math.round(responseJson.list[0].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[0].temp.min) + "\u00B0C"  + "," + responseJson.list[0].weather[0].main);
-      day2.text(Math.round(responseJson.list[1].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[1].temp.min) + "\u00B0C"  + "," + responseJson.list[1].weather[0].main);
-      day3.text(Math.round(responseJson.list[2].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[2].temp.min) + "\u00B0C"  + "," + responseJson.list[2].weather[0].main);
-      day4.text(Math.round(responseJson.list[3].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[3].temp.min) + "\u00B0C"  + "," + responseJson.list[3].weather[0].main);
-      day5.text(Math.round(responseJson.list[4].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[4].temp.min) + "\u00B0C"  + "," + responseJson.list[4].weather[0].main);
-      day6.text(Math.round(responseJson.list[5].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[5].temp.min) + "\u00B0C"  + "," + responseJson.list[5].weather[0].main);
-      day7.text(Math.round(responseJson.list[6].temp.max) + "\u00B0C" + "/" + Math.round(responseJson.list[6].temp.min) + "\u00B0C"  + "," + responseJson.list[6].weather[0].main);
+      // fetch api HourlyWeather
+fetch(`${apiHourlyWeather}?lat=${lat}&lon=${lon}&appid=${keyWeather}&units=metric`)
+.then((response) => response.json())
+.then((responseJson) => {
+  console.log(responseJson);
 
-      console.log(responseJson);
-      
+  renderHourlyForecast(responseJson);
+
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 
 
+
+
     },
-    (err) => {
+    (err) => { // if the loction not active
       alert(
         "Unable to retrieve your location. Please ensure location services are enabled.",
       );
@@ -143,55 +215,4 @@ const renderWeatherInfo = (data) => {
     },
   );
 
-
-  const showTime = () =>{
-    const date = new Date();
-    let hours = date.getHours();
-    let minutes =  date.getMinutes();
-    let seconds = date.getSeconds();
-  
-    hours = (hours<10) ? "0" + hours : hours;
-    minutes = (minutes<10) ? "0" + minutes : minutes;
-    seconds = (seconds<10) ? "0" + seconds : seconds;
-  
-    let time = hours + ":" +  minutes + ":" + seconds;
-    
-    localTime.text(time);
-    setTimeout(showTime,1000);
-
-  }
-
-
-  showTime();
-
-
-// Array nama hari
-const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-// Fungsi untuk mendapatkan hari ini dan hari-hari berikutnya
-function fillDays() {
-  let today = new Date().getDay(); // Mendapatkan hari ini dalam bentuk indeks (0 untuk Minggu, 1 untuk Senin, dst.)
-
-  // Loop untuk mengisi elemen d1 hingga d7
-  for (let i = 1; i <= 7; i++) {
-    // Menentukan indeks hari sesuai urutan
-    let dayIndex = (today + i - 1) % 7;
-
-    // Menemukan elemen berdasarkan ID d1, d2, ..., d7 dan mengisi dengan nama hari
-    $(`#d${i}`).text(daysOfWeek[dayIndex]);
-  }
-}
-
-// Memanggil fungsi untuk mengisi hari
-fillDays();
-
 });
-
-
-
-
-
-
-
-
-// https://api.openweathermap.org/data/2.5/weather?lat=-6.4483911&lon=106.7890904&appid=d12f1c70ff84d00a509bf50060d7af7c
