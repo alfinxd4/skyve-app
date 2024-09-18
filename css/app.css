@@ -985,35 +985,11 @@ video {
 @font-face {
   font-family: 'SF Pro Display';
 
-  src: url('../assets/fonts/sf-pro-display/SFPRODISPLAYREGULAR.otf') format('opentype');
+  src: url('../assets/fonts/sf-pro-display-regular.otf') format('opentype');
 
   font-weight: normal;
 
   font-style: normal;
-}
-
-body {
-  font-family: 'SF Pro Display', sans-serif;
-  background-position: center;
-  background-image: url('../assets/images/background/starry-mountain.png');
-}
-
-.blink {
-  animation: blink-animation 1s steps(1, end) infinite;
-}
-
-@keyframes blink-animation {
-  50% {
-    opacity: 0;
-  }
-}
-
-.bg-gradient-custom {
-  background: linear-gradient(
-      to right,
-      rgba(46, 51, 90, 0.5) 0%, /* Warna ungu dengan transparansi 50% */
-      rgba(28, 27, 51, 0.5) 100% /* Warna biru gelap dengan transparansi 50% */
-    );
 }
 
 .hover\:bg-gray-100:hover {
@@ -1057,4 +1033,6 @@ body {
     background-color: rgb(75 85 99 / var(--tw-bg-opacity));
   }
 }
+
+ 
   
