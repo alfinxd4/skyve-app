@@ -1,66 +1,74 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const glob = require('glob');
+const path = require('path'); //path location
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // htmlWebpackPlugin
+const glob = require('glob'); // glob
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // miniCssxtractPlugin
 
-const htmlFiles = glob.sync('./src/**/*.html'); // Find all .html in src folder
+const htmlFiles = glob.sync('./src/**/*.html'); // search and match .html files
 
-console.log('HTML Files Found:', htmlFiles); // Log found .html files
+// log list of .html files
+console.log('HTML Files Found:', htmlFiles);
 
-// Create an instance of HtmlWebpackPlugin for each .html file
-const htmlPlugins = htmlFiles.map(
+const htmlPlugins = htmlFiles.map( // automatically generate .html file
   (file) =>
     new HtmlWebpackPlugin({
-      inject: 'body', // Ensure the script is loaded at the end of the body
-      template: file, // File .html as template
-      filename: path.relative('./src', file), // Output in dist folder with same file name
+      inject: 'body',
+      template: file,
+      filename: path.relative('./src', file),
     }),
 );
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production'; // Determine if in production mode
+
+  const isProduction = argv.mode === 'production';  // define production mode var
 
   return {
-    mode: isProduction ? 'production' : 'development', // Set Webpack mode
+    mode: isProduction ? 'production' : 'development', // check mode builder
     entry: {
-      app: './src/js/app.js', // Entry point for JavaScript
+      app: './src/js/app.js', // entry point [output]
     },
     output: {
-      path: path.resolve(__dirname, 'dist'), // Output directory
-      filename: 'js/[name].bundle.js', // Output JavaScript file
-      assetModuleFilename: 'assets/images/[name][ext]', // Output images to dist/assets
+      path: path.resolve(__dirname, 'dist'),  // set folder output [dist]
+      filename: 'js/[name].bundle.js',  // set file .js output
     },
     plugins: [
-      ...htmlPlugins, // HtmlWebpackPlugin instances
+      ...htmlPlugins, // call htmlPlugins var
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].css', // set .css.map output [f debug]
+      }),
     ],
+    optimization: { // config when prod mode
+      minimize: isProduction, // minim,ize code
+      usedExports: true,
+    },
     module: {
       rules: [
-        {
+        { // [style-loader , css loader , postcss-loader](dev), ,miniCssExtractPlugin (prod)
           test: /\.css$/,
           use: [
-            !isProduction ? 'style-loader' : 'null-loader', 
-            'css-loader', // Load CSS
-            'postcss-loader', // Post-process CSS with PostCSS (includes Tailwind)
+            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            'css-loader',
+            'postcss-loader',
           ],
         },
-        {
-          test: /\.(png|jpg|jpeg|gif|svg)$/i, // Image types
-          type: 'asset/resource', // Use asset/resource for building images
+        { // file loader f img
+          test: /\.(png|jpg|jpeg|gif|svg|webp)$/i,  // allowed extensions
+          type: 'asset/resource',
+          generator: {   // generate according to what is in src/assets/
+            filename: (pathData) => {
+              return pathData.filename.replace('src/', '');  // delete 'src/' dan return subfolder structure
+            },
         },
+      },
+      { // file loader f font
+        test: /\.(woff|woff2|ttf|otf|eot)$/i,  // allowed extensions
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name][ext]',  // generate according to what is in src/assets/
+        },
+      },
       ],
     },
-    // Config webpack-dev-server
-    devServer: {
-      client: {
-        overlay: {
-          errors: true,
-          warnings: false,
-        },
-      },
-      static: {
-        directory: path.join(__dirname, 'dist'),
-      },
-      compress: true,
-      port: 9000,
-    },
+    // return source maps f debugging whene prod mode
+    devtool: isProduction ? 'source-map' : 'eval-source-map',
   };
 };
