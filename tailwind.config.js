@@ -1,12 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{html,js}', // entry point f find .html, .js in src
-    './dist/**/*.html', // entry point f .html, .js in src
+    './src/**/*.{html,js}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        custom: ['SF Pro Display', 'sans-serif'],
+    },
+    },
   },
-  plugins: [],
+  plugins: [
+  ],
 }
 
