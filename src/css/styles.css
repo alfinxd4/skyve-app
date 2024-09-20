@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('../assets/fonts/SFProDisplay-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+ }
+
+ body {
+   font-family: 'SF Pro Display', sans-serif; /* Ganti sans-serif dengan fallback font yang diinginkan */
+}
+
+/*  */
+.background-element {
+   background: linear-gradient(180deg, rgba(46, 51, 90, 0.6) 0%, rgba(28, 27, 51, 0.6) 100%);
+   box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+ /* blink for local time */
+ .blink {
+    animation: blink-animation 1s steps(1, end) infinite;
+ }
+
+ @keyframes blink-animation {
+    50% {
+       opacity: 0;
+  
+    }
+ }
+
+
+/*  */
+ .drawer-expanded {
+    height: 500px;
+ }
+

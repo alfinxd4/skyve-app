@@ -2,181 +2,204 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- stylesheet css -->
-  <link rel="stylesheet" href="css/app.css">
-  <!-- cdn library jquery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <!-- cdn font awesome -->
-  <script src="https://kit.fontawesome.com/c8105c8ce4.js" crossorigin="anonymous"></script>
-  <!-- library flowbite.css-->
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
-  <!-- icon tab -->
-  <!-- <link rel="icon" type="image/x-icon" href="assets/images/todo-logo.png"> -->
-  <!-- darkmode config -->
-  <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
-  </script>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Skyve : Check Current Weather</title>
+   <!-- stylesheet css -->
+   <link rel="stylesheet" href="css/app.css">
+   <!-- cdn library jquery -->
+   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"></script>
+   <!-- cdn font awesome -->
+   <script src="https://kit.fontawesome.com/c8105c8ce4.js" crossorigin="anonymous"></script>
+   <!-- library flowbite.css-->
+   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+
 </head>
 
-<body>
-  <div class="max-w-sm mx-auto pt-20">
-    <div id="time-info" class="mb-5 w-max mx-auto">
-      <p id="local-time" class="font-bold text-2xl mb-3 text-center"></p>
-    </div>
-    <!--  -->
-    <div class=" mb-5 w-max mx-auto" id="location-info">
-      <h1 class="font-bold text-2xl mb-3 text-center">Location Info</h1>
-  
-      <!-- location detail -->
-      <div class="font-bold text-center">
-        <p>
-          <span id="city-name"></span>,
-          <span id="country-name"></span>
-        </p>
-      </div>
-    </div>
+<body class="bg-no-repeat bg-cover bg-center h-full m-0 overflow-hidden relative"
+   style="  background-image: url('assets/images/background/starry-mountain.webp');">
 
-    <div class=" mb-5 w-max mx-auto" id="weather-info">
-      <h1 class="font-bold text-2xl mb-3 text-center">Weather Info</h1>
-      <!-- temp -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Temperature</span>
-        <span>:</span>
-        <span id="temp"></span>
-      </div>
-      <!-- humidity -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Humidity</span>
-        <span>:</span>
-        <span id="humidity"></span>
-      </div>
-      <!-- weather -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Weather</span>
-        <span>:</span>
-        <span id="weather"></span>
-      </div>
-      <!-- weather min/max -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold">Min/Max</span>
-        <span>:</span>
-        <p><span id="min-temp"></span>/<span id="max-temp"></span></p>
+   <!-- mainm content -->
+   <main class="flex flex-col min-h-screen">
 
-      </div>
-    </div>
+      <div class="flex-grow max-w-sm pt-5 mx-auto text-center">
 
-    <div class=" mb-5 w-max mx-auto" id="daily-info">
-      <h1 class="font-bold text-2xl mb-3 text-center">Daily Info</h1>
-      <!-- Day 1 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d1"></span>
-        <span>:</span>
-        <span id="day1"></span>
-      </div>
-      <!-- Day 2 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d2"></span>
-        <span>:</span>
-        <span id="day2"></span>
-      </div>
-      <!-- Day 3 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d3"></span>
-        <span>:</span>
-        <span id="day3"></span>
-      </div>
-      <!-- Day 4 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d4"></span>
-        <span>:</span>
-        <span id="day4"></span>
-      </div>
-      <!-- Day 5 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d5"></span>
-        <span>:</span>
-        <span id="day5"></span>
-      </div>
-      <!-- Day 6 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d6"></span>
-        <span>:</span>
-        <span id="day6"></span>
-      </div>
-      <!-- Day 5 -->
-      <div class="flex items-center space-x-3 justify-center">
-        <span class="font-bold" id="d7"></span>
-        <span>:</span>
-        <span id="day7"></span>
-      </div>
-    </div>
+         <div class="font-semibold text-white">
+            <!-- city-name -->
+            <p class="text-lg ">
+               <span id="">Jakarta</span>,
+               <span id="">ID</span>
+            </p>
+            <!-- local datetime -->
+            <p class="text-sm">
+               <span>Wed 18</span> |
+               <span>08:08 PM</span>
+            </p>
+         </div>
 
-
-
-
-    <div id="hourly-info" class=" mb-5 w-max mx-auto">
-      <h1 class="font-bold text-2xl mb-3 text-center">Hourly Info</h1>
-       <!-- Hour 1 [now] -->
-       <div class="flex items-center space-x-3 justify-center">
-        <span id="hour1"></span>
-      </div>
-       <!-- Hour 2-->
-       <div class="flex items-center space-x-3 justify-center">
-        <span id="hour2"></span>
-      </div>
-        <!-- Hour 3-->
-        <div class="flex items-center space-x-3 justify-center">
-          <span id="hour3"></span>
-        </div>
-          <!-- Hour 4-->
-       <div class="flex items-center space-x-3 justify-center">
-        <span id="hour4"></span>
-      </div>
-          <!-- Hour 5-->
-          <div class="flex items-center space-x-3 justify-center">
-            <span id="hour5"></span>
-          </div>
-             <!-- Hour6-->
-             <div class="flex items-center space-x-3 justify-center">
-              <span id="hour6"></span>
+         <!-- weather-icon -->
+         <div class="flex justify-center items-center mt-5">
+            <div class="mx-auto text-center">
+               <img src="assets/images/weather/thunderstorm/night-storm.webp" alt="icon_weather" class="w-40 h-auto max-w-sm ">
             </div>
-             <!-- Hour7-->
-             <div class="flex items-center space-x-3 justify-center">
-              <span id="hour7"></span>
+         </div>
+
+         <!-- current-info -->
+         <div>
+            <!-- current-weather -->
+            <p class="text-xl text-slate-100 font-semibold">Thunderstorm</p>
+
+            <div class="mt-5 text-white ">
+               <div class="flex items-center justify-center space-x-12 ">
+                  <!-- current windspeed -->
+                  <div class="">
+                     <p class="text-sm">Wind</p>
+                     <p class="text-2xl font-semibold mt-2">245</p>
+                  </div>
+                  <!-- current temp -->
+                  <div class="">
+                     <p class="text-sm">Temp</p>
+                     <p class="text-2xl font-semibold mt-2">27&deg;</p>
+                  </div>
+                  <!-- current humidity -->
+                  <div class="">
+                     <p class="text-sm">Humidity</p>
+                     <p class="text-2xl font-semibold mt-2">87%</p>
+                  </div>
+               </div>
             </div>
-             <!-- Hour8-->
-             <div class="flex items-center space-x-3 justify-center">
-              <span id="hour8"></span>
+         </div>
+      </div>
+   </main>
+
+   <!-- Drawer component -->
+   <div id="drawer-swipe" class="fixed z-40 w-full border-t border-gray-200  rounded-t-[1.6rem]
+   transition-all duration-700 ease-in-out h-[250px] bottom-0 
+    left-0 right-0 overflow-y-auto  background-element bg-opacity-20 backdrop-blur-md dark:border-gray-7003" tabindex="-1">
+
+      <div class="border-b border-2 border-white border-opacity-20 ">
+
+         <div class="p-4 drawer-toggle"  id="drawer-toggle">
+            <span
+               class="absolute w-12 h-1 -translate-x-1/2 bg-slate-800 rounded-lg top-3 left-1/2"></span>
+         </div>
+         <div class="flex items-center justify-between text-white mb-3 text-xs px-5">
+            <p class="">Hourly Forecast</p>
+            <p class=""">Weekly Forecast</p>
+         </div>
+   </div>
+           <!-- Content that is visible when the drawer is collapsed -->
+           <div id=" drawer-initial-content">
+            <div class=" grid grid-cols-5 mt-10 gap-2">
+               <!--  -->
+               <!-- <div class="text-white text-center text-sm bg-[#48319D]/40 backdrop-blur-md  border border-white  rounded-full py-3 px-1 shadow-xl" > -->
+               <div class="bg-[#48319D]/80 w-12 h-24 rounded-full shadow-xl mx-auto text-center">
+                  <!-- weather-icon -->
+                  <div class="flex justify-center items-center relative -top-5 ">
+                     <div class="mx-auto text-center">
+                        <img src="assets/images/weather/thunderstorm/night-storm.webp" alt="icon_weather" class="w-12 h-auto">
+                     </div>
+                  </div>
+                  <!--  -->
+                  <div class="relative -top-3 text-xs text-white">
+                     <p class="">12 AM</p>
+                     <p class="">30&deg;</p>
+                  </div>
+               </div>
+
+               <div class="bg-[#48319D]/80 w-12 h-24 rounded-full shadow-xl mx-auto text-center">
+                  <!-- weather-icon -->
+                  <div class="flex justify-center items-center relative -top-5 ">
+                     <div class="mx-auto text-center">
+                        <img src="assets/images/weather/thunderstorm/night-storm.webp" alt="icon_weather" class="w-12 h-auto">
+                     </div>
+                  </div>
+                  <!--  -->
+                  <div class="relative -top-3 text-xs text-white">
+                     <p class="">12 AM</p>
+                     <p class="">30&deg;</p>
+                  </div>
+               </div>
+
+
+               <div class="bg-[#48319D]/80 w-12 h-24 rounded-full shadow-xl mx-auto text-center">
+                  <!-- weather-icon -->
+                  <div class="flex justify-center items-center relative -top-5 ">
+                     <div class="mx-auto text-center">
+                        <img src="assets/images/weather/thunderstorm/night-storm.webp" alt="icon_weather" class="w-12 h-auto">
+                     </div>
+                  </div>
+                  <!--  -->
+                  <div class="relative -top-3 text-xs text-white">
+                     <p class="">12 AM</p>
+                     <p class="">30&deg;</p>
+                  </div>
+               </div>
+
+
+               <div class="bg-[#48319D]/80 w-12 h-24 rounded-full shadow-xl mx-auto text-center">
+                  <!-- weather-icon -->
+                  <div class="flex justify-center items-center relative -top-5 ">
+                     <div class="mx-auto text-center">
+                        <img src="assets/images/weather/thunderstorm/night-storm.webp" alt="icon_weather" class="w-12 h-auto">
+                     </div>
+                  </div>
+                  <!--  -->
+                  <div class="relative -top-3 text-xs text-white">
+                     <p class="">12 AM</p>
+                     <p class="">30&deg;</p>
+                  </div>
+               </div>
+
+               <div class="bg-[#48319D]/80 w-12 h-24 rounded-full shadow-xl mx-auto text-center">
+                  <!-- weather-icon -->
+                  <div class="flex justify-center items-center relative -top-5 ">
+                     <div class="mx-auto text-center">
+                        <img src="assets/images/weather/thunderstorm/night-storm.webp" alt="icon_weather" class="w-12 h-auto">
+                     </div>
+                  </div>
+                  <!--  -->
+                  <div class="relative -top-3 text-xs text-white">
+                     <p class="">12 AM</p>
+                     <p class="">30&deg;</p>
+                  </div>
+               </div>
             </div>
-             <!-- Hour9-->
-             <div class="flex items-center space-x-3 justify-center">
-              <span id="hour9"></span>
+
+            <!--  -->
+            <div class="flex items-center justify-around text-white text-lg">
+<div>
+   <i class="fa-solid fa-map-pin"></i>
+</div>
+
+
+<div>
+   <i class="fa-solid fa-map-pin"></i>
+</div>
+
+<div>
+   <i class="fa-solid fa-list"></i>
+</div>
             </div>
-             <!-- Hour10-->
-             <div class="flex items-center space-x-3 justify-center">
-              <span id="hour10"></span>
-            </div>
-                 <!-- Hour11-->
-                 <div class="flex items-center space-x-3 justify-center">
-                  <span id="hour11"></span>
-                </div>
-                <!-- Hour12-->
-                <div class="flex items-center space-x-3 justify-center">
-                  <span id="hour12"></span>
-                </div>
-    </div>
+
+
+         </div>
+         <!-- Content that will be revealed upon expanding -->
+         <div id="drawer-expanded-content" class="hidden mt-4">
+            More content can be added here to fit the extended height.
+            More content can be added here to fit the extended height.
+            More content can be added here to fit the extended height.
+            More content can be added here to fit the extended height.
+         </div>
+      </div>
+   </div>
+
+   <script>
     
-    <!-- <button id="btn-get-location" class="p-5 bg-red-500 text-white w-full font-semibold rounded-md">Kiw, Klik Dong</button> -->
-  </div>
+   </script>
 
-
-
+   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 
 </body>
 
