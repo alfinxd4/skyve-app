@@ -562,9 +562,6 @@ video {
 .mt-5 {
   margin-top: 1.25rem;
 }
-.mt-7 {
-  margin-top: 1.75rem;
-}
 .flex {
   display: flex;
 }
@@ -621,8 +618,11 @@ video {
 .cursor-pointer {
   cursor: pointer;
 }
-.grid-cols-5 {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+.auto-cols-max {
+  grid-auto-columns: max-content;
+}
+.grid-flow-col {
+  grid-auto-flow: column;
 }
 .flex-col {
   flex-direction: column;
@@ -653,6 +653,9 @@ video {
 .overflow-y-auto {
   overflow-y: auto;
 }
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
 .rounded-full {
   border-radius: 9999px;
 }
@@ -662,9 +665,6 @@ video {
 .rounded-t-\[1\.6rem\] {
   border-top-left-radius: 1.6rem;
   border-top-right-radius: 1.6rem;
-}
-.border {
-  border-width: 1px;
 }
 .border-2 {
   border-width: 2px;
@@ -686,9 +686,6 @@ video {
 .border-opacity-20 {
   --tw-border-opacity: 0.2;
 }
-.bg-\[\#48319D\]\/40 {
-  background-color: rgb(72 49 157 / 0.4);
-}
 .bg-\[\#48319D\]\/80 {
   background-color: rgb(72 49 157 / 0.8);
 }
@@ -708,10 +705,6 @@ video {
 .bg-no-repeat {
   background-repeat: no-repeat;
 }
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-}
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -720,12 +713,11 @@ video {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
 .pt-5 {
   padding-top: 1.25rem;
+}
+.pt-7 {
+  padding-top: 1.75rem;
 }
 .text-center {
   text-align: center;
@@ -797,6 +789,13 @@ video {
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 
 
   
@@ -808,12 +807,13 @@ video {
     font-display: swap;
  }
 
+ /*  */
  body {
    font-family: 'SF Pro Display', sans-serif; /* Ganti sans-serif dengan fallback font yang diinginkan */
 }
 
 /*  */
-.background-element {
+.background-drawer {
    background: linear-gradient(180deg, rgba(46, 51, 90, 0.6) 0%, rgba(28, 27, 51, 0.6) 100%);
    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -831,10 +831,18 @@ video {
     }
  }
 
-
 /*  */
  .drawer-expanded {
     height: 500px;
+ }
+
+/* btn-plus */
+ .plus-gradient {
+   background: linear-gradient(
+     to bottom,
+     rgba(245, 245, 249, 1) 0%,  /* #F5F5F9 with 100% opacity */
+     rgba(218, 223, 231, 0.7) 100%  /* #DADFE7 with 70% opacity */
+   );
  }
 
 
