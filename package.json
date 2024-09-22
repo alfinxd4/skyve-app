@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "jquery": "^3.7.1",
-    "preline": "^2.4.1"
+    "preline": "^2.4.1",
+    "tailwind-scrollbar-hide": "^1.1.7"
   }
 }
