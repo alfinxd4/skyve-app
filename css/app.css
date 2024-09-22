@@ -624,6 +624,9 @@ video {
 .h-\[110px\] {
   height: 110px;
 }
+.h-\[285px\] {
+  height: 285px;
+}
 .h-auto {
   height: auto;
 }
