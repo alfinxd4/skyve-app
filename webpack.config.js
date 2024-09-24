@@ -24,7 +24,7 @@ module.exports = (env, argv) => {
   return {
     mode: isProduction ? 'production' : 'development', // check mode builder
     entry: {
-      app: './src/js/app.js', // entry point [output]
+      main: './src/js/main.js', // entry point [output]
     },
     output: {
       path: path.resolve(__dirname, 'dist'),  // set folder output [dist]

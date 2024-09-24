@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Skyve : Check Current Weather</title>
-   <!-- stylesheet css -->
-   <link rel="stylesheet" href="css/app.css">
+   <title>Document</title>
    <!-- cdn library jquery -->
    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"></script>
+   <!-- stylesheet css -->
+   <link rel="stylesheet" href="css/app.css">
    <!-- cdn font awesome -->
    <script src="https://kit.fontawesome.com/c8105c8ce4.js" crossorigin="anonymous"></script>
    <!-- library flowbite.css-->
    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
-
+ 
 </head>
-
-<body class="bg-no-repeat bg-cover bg-center h-full m-0 overflow-hidden relative"
-   style=" background-image: url('assets/images/background/starry-mountain.webp');">
-
+<body class="h-full m-0 overflow-hidden relative bg-slate-950"> 
+  <!-- canvas background -->
+   <div class="canvas-outer -z-10 absolute top-0 left-0 w-100 h-100">
+      <canvas id="canvas" class="canvas"></canvas>
+    </div>
+    <!-- refresh-element -->
+    <div class="absolute top-44 right-20">
+      <i id="icon-refresh" class="fa-solid fa-arrows-rotate fa-spin text-xl text-white cursor-pointer"></i>
+   </div>
    <!-- main content -->
-   <main class="flex flex-col min-h-screen">
+   <main class="flex flex-col min-h-screen z-40">
       <div class="flex-grow max-w-sm pt-5 mx-auto text-center">
-         <div class="font-semibold text-white">
+         <div class="font-semibold text-white pt-14">
             <!-- city-name -->
-            <p class="text-lg ">
+            <p class="text-lg">
                <span id="city-name"></span>,
                <span id="country-code"></span>
+               <i class="fa-solid fa-location-arrow ms-1"></i>
             </p>
             <!-- local-time -->
             <p id="local-time"></p>
          </div>
 
-         <!-- weather-icon -->
+         <!-- current-weather-icon -->
          <div class="flex justify-center items-center mt-5">
             <div class="mx-auto text-center">
                <img id="icon-current-weather" alt="weather_icon"
@@ -41,7 +46,7 @@
             </div>
          </div>
 
-         <!-- current-info -->
+         <!-- waather-info -->
          <div>
             <!-- current-weather -->
             <p id="current-weather" class="text-xl text-slate-100 font-semibold"></p>
@@ -50,17 +55,26 @@
                <div class="flex items-center justify-center space-x-12 ">
                   <!-- current windspeed -->
                   <div class="">
-                     <p class="text-sm">Wind</p>
+                    <div class="flex items-center space-x-2">
+                      <i class="fa-solid fa-wind"></i>
+                      <p class="text-sm font-bold">Wind</p>
+                    </div>
                      <p id="current-windspeed" class="text-2xl font-semibold mt-2"></p>
                   </div>
                   <!-- current temp -->
                   <div class="">
-                     <p class="text-sm">Temp</p>
+                    <div class="flex items-center space-x-2">
+                      <i class="fa-solid fa-temperature-three-quarters"></i>
+                      <p class="text-sm font-bold">Temp</p>
+                    </div>
                      <p id="current-temp" class="text-2xl font-semibold mt-2"></p>
                   </div>
                   <!-- current humidity -->
                   <div class="">
-                     <p class="text-sm">Humidity</p>
+                    <div class="flex items-center space-x-2">
+                      <i class="fa-solid fa-droplet"></i>
+                      <p class="text-sm font-bold">Humidity</p>
+                    </div>
                      <p id="current-humi" class="text-2xl font-semibold mt-2"></p>
                   </div>
                </div>
@@ -69,63 +83,59 @@
       </div>
    </main>
 
-   <!-- drawer-component -->
-   <div id="drawer-swipe" class="fixed z-40 w-full border-t border-gray-200  rounded-t-[1.6rem]
-   transition-all duration-700 ease-in-out h-[255px] bottom-0 
-    left-0 right-0 overflow-y-auto  background-drawer bg-opacity-20 backdrop-blur-md " tabindex="-1">
-      <div class="border-b h-12 border-2 border-white border-opacity-20 ">
-
-         <div class="py-2 drawer-toggle cursor-pointer" id="drawer-toggle">
-            <span
-               class="absolute w-12 h-1 -translate-x-1/2 bg-slate-800 rounded-lg top-3 left-1/2 cursor-pointer"></span>
-         </div>
-         <div class="flex items-center justify-between text-white mb-3 text-xs px-5 relative top-1.5">
-            <p id="" class="cursor-pointer">Hourly Forecast</p>
-            <p id="" class="cursor-pointer">Daily Forecast</p>
-         </div>
-      </div>
-      <!-- content that is visible when the drawer is collapsed -->
-      <div id=" drawer-initial-content">
-         <div id="hourly-forecast" class="grid grid-flow-col auto-cols-max overflow-x-scroll scrollbar-hide pt-7 gap-2">
-            <!-- Elemen cuaca akan ditambahkan di sini -->
-          </div>
-          
-
-  
-      </div>
-
-
-
-      <!-- content that will be revealed upon expanding -->
-      <div id="drawer-expanded-content" class="hidden mt-4">
-         More content can be added here to fit the extended height.
-         More content can be added here to fit the extended height.
-         More content can be added here to fit the extended height.
-         More content can be added here to fit the extended height.
-      </div>
-   </div>
-
-
-          <!-- menu -->
-          <div class="flex items-center justify-around text-white text-lg fixed bottom-3 w-full z-40">
-            <!-- map-menu -->
-            <div>
-               <i class="fa-solid fa-map-pin shadow-xl cursor-pointer"></i>
+      <!-- drawer-component -->
+      <div id="drawer-swipe" class="fixed z-40 w-full border-t border-gray-200  rounded-t-[1.6rem]
+      transition-all duration-700 ease-in-out h-[285px] bottom-0 
+       left-0 right-0 overflow-y-auto  background-drawer bg-opacity-20 backdrop-blur-md " tabindex="-1">
+         <div class="border-b h-14 border-2 border-white border-opacity-20 ">
+   
+            <div class="py-2 drawer-toggle cursor-pointer" id="drawer-toggle">
+               <span
+                  class="absolute w-12 h-1 -translate-x-1/2 bg-slate-800 rounded-lg top-3 left-1/2 cursor-pointer"></span>
             </div>
-            <!-- map-add -->
-            <div class="relative -top-3">
-               <div class="plus-gradient size-12 rounded-full flex items-center justify-center shadow-xl">
-                  <i class="fa-solid fa-plus text-[#48319D] font-bold text-xl cursor-pointer"></i>
-               </div>
-            </div>
-            <!-- map-list -->
-            <div>
-               <i class="fa-solid fa-list shadow-xl cursor-pointer"></i>
+            <div class="flex items-center justify-between text-white mb-3 text-xs px-5 relative top-1.5">
+               <p id="hourly-page" class="cursor-pointer py-2">Hourly Forecast</p>
+               <p id="daily-page" class="cursor-pointer py-2">Daily Forecast</p>
             </div>
          </div>
-   <!-- flowbite.js -->
-   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
-
+         <!-- content that is visible when the drawer is collapsed -->
+         <div id="drawer-initial-content">
+            <div id="hourly-forecast" class="grid grid-flow-col auto-cols-max overflow-x-scroll scrollbar-hide pt-7 gap-2 px-5">
+            
+            </div>
+   
+            <div id="daily-forecast" class="grid grid-flow-col auto-cols-max overflow-x-scroll scrollbar-hide pt-7 gap-2 px-5"></div>
+            
+         </div>
+   
+         <!-- content that will be revealed upon expanding -->
+         <div id="drawer-expanded-content" class="hidden mt-4">
+            More content can be added here to fit the extended height.
+            More content can be added here to fit the extended height.
+            More content can be added here to fit the extended height.
+            More content can be added here to fit the extended height.
+         </div>
+      </div>
+   
+      <!-- menu -->
+      <div id="menu" class="flex items-center justify-around text-white text-lg fixed bottom-3 w-full z-40">
+         <!-- map-menu -->
+         <a href="index.html" >
+            <i class="fa-solid fa-map-pin shadow-xl cursor-pointer"></i>
+         </a>
+         <!-- map-add -->
+         <a class="relative -top-3">
+            <div id="btn-add-weather" class="size-12 rounded-full flex items-center justify-center shadow-xl">
+               <i class="fa-solid fa-plus text-[#48319D] font-bold text-xl cursor-pointer"></i>
+            </div>
+         </a>
+         <!-- map-list -->
+         <a >
+            <i class="fa-solid fa-list shadow-xl cursor-pointer"></i>
+         </a>
+      </div>
+   
+      <!-- flowbite.js -->
+      <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
-
 </html>
