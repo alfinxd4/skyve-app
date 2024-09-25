@@ -1,18 +1,19 @@
 import "../../src/css/main.css"; // import main.css
 import "../../src/css/styles.css"; // import styles.css
 
-// import all images from assets/images folder
+// Import all images from assets/images folder
 const images = require.context(
   "../assets/images",
   true,
   /\.(png|jpe?g|gif|svg|webp)$/
 );
-images.keys().map((key) => images(key)); // create an array to store all imported images
+images.keys().forEach((key) => images(key)); // Import semua gambar
 
-export const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // list days of week
-// selector set
+export const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // List days of week
+
+// Selector set
 export const selectors = {
-  btnRefresh : $("#icon-refresh"),
+  btnRefresh: $("#icon-refresh"),
   cityName: $("#city-name"),
   countryCode: $("#country-code"),
   currentTemp: $("#current-temp"),
@@ -26,74 +27,6 @@ export const selectors = {
   drawer: $("#drawer-swipe"),
   expandedContent: $("#drawer-expanded-content"),
   menu: $("#menu"),
-};
-
-export const weatherDescriptions = (weatherCode) => {
-  let weather = "Unknown";
-  let iconSrc = "";
- 
-  // Menentukan cuaca
-  if (weatherCode === 0 || weatherCode === 1) {
-    weather = "Clear";
-  } else if (weatherCode === 2) {
-    weather = "Cloudy";
-  } else if (weatherCode === 3) {
-    weather = "Overcast";
-  } else if (weatherCode === 45 || weatherCode === 48) {
-    weather = "Fog";
-  } else if (weatherCode >= 51 && weatherCode <= 55) {
-    weather = "Drizzle";
-  } else if (
-    weatherCode >= 61 && weatherCode <= 65 ||
-    weatherCode >= 80 && weatherCode <= 82
-  ) {
-    weather = "Rain";
-  } else if (weatherCode >= 71 && weatherCode <= 75 || weatherCode >= 85 && weatherCode <= 86) {
-    weather = "Snow";
-  } else if (weatherCode >= 95 && weatherCode <= 99) {
-    weather = "Thunderstorm";
-  }
-
-  
-  // Menentukan iconSrc berdasarkan cuaca
-  if (weather === "Clear") {
-    iconSrc = "assets/images/weather/clear/night-clear.webp";
-  } else if (weather === "Cloudy") {
-    iconSrc = "assets/images/weather/cloudly/night-cloudly.webp";
-  } else if (weather === "Overcast") {
-    iconSrc = "assets/images/weather/overcast/overcast.webp";
-  } else if (weather === "Fog") {
-    iconSrc = "assets/images/weather/fog/fog.webp";
-  } else if (weather === "Drizzle") {
-    iconSrc = "assets/images/weather/cloudly/night-drizzle.webp";
-  } else if (weather === "Rain") {
-    iconSrc = "assets/images/weather/rain/night-rain.webp";
-  } else if (weather === "Snow") {
-    iconSrc = "assets/images/weather/snow/night-snow.webp";
-  } else if (weather === "Thunderstorm") {
-    iconSrc = "assets/images/weather/thunderstorm/night-storm.webp";
-  }
-
-  return {
-    weather,
-    iconSrc,
-  };
-};
-
- 
- 
-
-export const showTime = () => {
-  const d = new Date();
-  const date = d.getDate();
-  const day = d.getDay();
-  const hours = String(d.getHours()).padStart(2, "0");
-  const minutes = String(d.getMinutes()).padStart(2, "0");
-
-  const time = `${daysOfWeek[day]} ${date} <span> | </span> ${hours} <span class="colon">:</span> ${minutes}`;
-  selectors.localTime.html(time);
-  $(".colon").toggleClass("blink", d.getSeconds() % 2 === 0);
-  setTimeout(showTime, 1000);
 };
 
 export const getCoordinates = (success, error) => {
@@ -117,101 +50,133 @@ export const renderGeocoding = (data) => {
   selectors.countryCode.text(data.results[0].components.country_code.toUpperCase());
 };
 
-export let weatherInfo; // Deklarasi letiabel global
+export const weatherDescriptions = (weatherCode) => {
+  let weather;
+  let iconSrc;
 
-export const renderCurrentWeather = (data) => {
-  weatherInfo = weatherDescriptions(data.current.weather_code); // Simpan hasil ke letiabel global
+  // Menentukan cuaca
+  if (weatherCode === 0 || weatherCode === 1) {
+    weather = "Clear";
+  } else if (weatherCode === 2) {
+    weather = "Cloudy";
+  } else if (weatherCode === 3) {
+    weather = "Overcast";
+  } else if (weatherCode === 45 || weatherCode === 48) {
+    weather = "Fog";
+  } else if (weatherCode >= 51 && weatherCode <= 55) {
+    weather = "Drizzle";
+  } else if (
+    weatherCode >= 61 && weatherCode <= 65 ||
+    weatherCode >= 80 && weatherCode <= 82
+  ) {
+    weather = "Rain";
+  } else if (weatherCode >= 71 && weatherCode <= 75 || weatherCode >= 85 && weatherCode <= 86) {
+    weather = "Snow";
+  } else if (weatherCode >= 95 && weatherCode <= 99) {
+    weather = "Thunderstorm";
+  }
 
-  // Pembaruan kondisi
-  condition.clouds = false;
-  condition.lightning = false;
-  condition.rain = false;
-  condition.snow = false;
-  condition.wind = false;
-
-  switch (data.current.weather_code) {
-    case 0: // Clear
-    condition.clouds = false;
-    condition.lightning = false;
-    condition.rain = false;
-    condition.snow = false;
-    condition.wind = false;
-    case 1: // Clear
-    condition.clouds = false;
-    condition.lightning = false;
-    condition.rain = false;
-    condition.snow = false;
-    condition.wind = false;
+  // Menentukan iconSrc berdasarkan cuaca
+  switch (weather) {
+    case "Clear":
+      iconSrc = "assets/images/weather/clear/night-clear.webp";
       break;
-    case 2: // Cloudy
-      condition.clouds = true;
-      condition.lightning = false;
-      condition.rain = false;
-      condition.snow = false;
-      condition.wind = false;
+    case "Cloudy":
+      iconSrc = "assets/images/weather/cloudly/night-cloudly.webp";
       break;
-    case 3: // Overcast
-      condition.clouds = true;
-      condition.lightning = false;
-      condition.rain = false;
-      condition.snow = false;
-      condition.wind = false;
+    case "Overcast":
+      iconSrc = "assets/images/weather/overcast/overcast.webp";
       break;
-      case 45: // Fog
-      case 48: // Fog
-        condition.rain = false;
-        condition.clouds = true;
-        condition.lightning = false;
-        condition.snow = false;
-        condition.wind = true;
-        break;
-      case 51: // Drizzle
-      case 53: // Drizzle
-      case 55: // Drizzle
-        condition.rain = true;
-        condition.clouds = true;
-        condition.lightning = false;
-        condition.snow = false;
-        condition.wind = false;
-        break;
-    case 61: // Rain
-    case 63: // Rain
-    case 65: // Rain
-    condition.rain = true;
-    condition.clouds = true;
-    condition.lightning = true;
-    condition.snow = false;
-    condition.wind = false;
+    case "Fog":
+      iconSrc = "assets/images/weather/fog/fog.webp";
       break;
-    case 71: // Snow
-    case 73: // Snow
-    case 75: // Snow
-    condition.rain = false;
-    condition.clouds = false;
-    condition.lightning = false;
-    condition.snow = true;
-    condition.wind = false;
+    case "Drizzle":
+      iconSrc = "assets/images/weather/cloudly/night-drizzle.webp";
       break;
-    case 95: // Thunderstorm
-    case 96: // Thunderstorm
-    case 99: // Thunderstorm
-    condition.rain = true;
-    condition.clouds = true;
-    condition.lightning = true;
-    condition.snow = true;
-    condition.wind = false;
+    case "Rain":
+      iconSrc = "assets/images/weather/rain/night-rain.webp";
       break;
-    default:
+    case "Snow":
+      iconSrc = "assets/images/weather/snow/night-snow.webp";
+      break;
+    case "Thunderstorm":
+      iconSrc = "assets/images/weather/thunderstorm/night-storm.webp";
       break;
   }
-  // Update UI
-  selectors.currentWeather.text(weatherInfo.weather);
-  selectors.currentTemp.text(Math.round(data.current.temperature_2m) + "\u00B0");
-  selectors.currentHumi.text(data.current.relative_humidity_2m + "%");
-  selectors.currentWindSpeed.text(data.current.wind_speed_10m + "m/s");
-  selectors.iconCurrentWeather.attr("src", weatherInfo.iconSrc);
+
+  return {
+    weather,
+    iconSrc,
+  };
 };
 
+export const renderCurrentWeather = (data) => {
+  const weatherInfo = weatherDescriptions(data.weather_code);
+  console.log(weatherInfo.weather);
+  console.log(data.weather_code);
+
+
+  // Tentukan kondisi berdasarkan kode cuaca
+  if (data.weather_code === 0 || data.weather_code === 1) {
+    //clear
+    condition.rain = false;
+    condition.clouds = false;
+    condition.lightning = false;
+    condition.snow = false;
+    condition.wind = false;
+  } else if (data.weather_code === 2 || data.weather_code === 3) {
+    // cloudly
+    condition.rain = false;
+    condition.clouds = true;
+    condition.lightning = false;
+    condition.snow = false;
+    condition.wind = false;
+  } else if (data.weather_code === 45 || data.weather_code === 48) {
+    // fog
+    condition.rain = false;
+    condition.clouds = false;
+    condition.lightning = true;
+    condition.snow = true;
+    condition.wind = false;
+  } else if (data.weather_code >= 51 && data.weather_code <= 55) {
+    // drizzle
+    condition.rain = true;
+    condition.clouds = true;
+    condition.lightning = false;
+    condition.snow = false;
+    condition.wind = false;
+  } else if (data.weather_code >= 61 && data.weather_code <= 65 || data.weather_code >=80 && data.weather_code <= 82) {
+    // rain
+    condition.rain = true;
+    condition.clouds = true;
+    condition.lightning = false;
+    condition.snow = false;
+    condition.wind = true;
+    condition.lightning = false;
+  } else if (data.weather_code >= 71 && data.weather_code <= 77 || data.weather_code >= 85 && data.weather_code <= 86) {
+    // snow
+    condition.rain = false;
+    condition.clouds = false;
+    condition.lightning = false;
+    condition.snow = true;
+    condition.wind = false;
+  } else if (data.weather_code >= 95 && data.weather_code <= 99) {
+    condition.rain = false;
+    condition.clouds = false;
+    condition.lightning = false;
+    condition.snow = false;
+    condition.wind = false;
+  }
+
+ 
+
+  // Update UI
+  selectors.currentWeather.text(weatherInfo.weather);
+  selectors.currentTemp.text(Math.round(data.temperature_2m) + "\u00B0");
+  selectors.currentHumi.text(data.relative_humidity_2m + "%");
+  selectors.currentWindSpeed.text(data.wind_speed_10m + "m/s");
+  selectors.iconCurrentWeather.attr("src", weatherInfo.iconSrc);
+};
 
 export const renderHourlyForecast = (data) => {
   const currentTime = new Date();
@@ -277,6 +242,18 @@ export const renderDailyForecast = (data) => {
   });
 };
 
+export const showTime = () => {
+  const d = new Date();
+  const date = d.getDate();
+  const day = d.getDay();
+  const month = d.getMonth();
+  const year = d.getFullYear();
+
+  const currentDate = `${daysOfWeek[day]}, ${date} ${month + 1} ${year}`;
+  selectors.localTime.text(currentDate);
+};
+ 
+
 $(window).on("load", () => {
   $("#daily-forecast").addClass("hidden");
   getCoordinates((lat, lon) => {
@@ -290,7 +267,8 @@ $(window).on("load", () => {
     fetch(apiWeather)
       .then(response => response.json())
       .then(data => {
-        renderCurrentWeather(data);
+        renderCurrentWeather(data.current);
+        setConditionReady();
         renderHourlyForecast(data);
         renderDailyForecast(data);
       })
@@ -302,7 +280,6 @@ $(window).on("load", () => {
   
   
 });
-
 
 // refresh-page
 selectors.btnRefresh.on("click", () => {
@@ -341,20 +318,8 @@ export let condition = {
   lightning: false, 
   rain: false, 
   snow: false, 
-  wind: false 
+  wind: false ,
 };
-// Contoh data
-export const data = {
-  current: {
-    weather_code: 45, // Contoh kode cuaca
-    temperature_2m: 30,
-    relative_humidity_2m: 65,
-    wind_speed_10m: 5,
-  },
-};
-
-renderCurrentWeather(data); // Memanggil fungsi
-
  
 
 
@@ -391,10 +356,22 @@ export const preLoadImageAssets = function(callback) {
 
  
 export const setConditionReady = function() {
-  pause();
-  spawnedClouds = false;
-  assets = []; // Clear assets
-  beginSpawning();
+ // stop spawning
+ pause();
+
+ // clear flags
+ spawnedClouds = false;
+
+ // clear assets
+ for(let i = 0, n = assets.length; i < n; i ++)
+ {
+   assets.splice(i, 1);
+   n --;
+   i --;
+ }
+
+ // start spawning
+ beginSpawning();
 };
 
 /*
@@ -403,6 +380,7 @@ export const setConditionReady = function() {
 |
 */
 export const beginSpawning = function() {
+
   if (animationId) return;
   if (condition.clouds && !spawnedClouds) {
     assets.push(new cloud({ x: -400 }), new cloud({ x: 700 }), new cloud({ x: 1400 }));
@@ -410,21 +388,43 @@ export const beginSpawning = function() {
   }
   if (condition.rain) timers.rain = setInterval(() => assets.push(new rainDrop()), 60);
   if (condition.snow) timers.snow = setInterval(() => assets.push(new snowFlake()), 250);
-  if (condition.wind) {
-    (function spawnLeaves() {
-      for (let i = 0, n = randomRange(0, 3); i < n; i++) assets.push(new blowingLeaf());
+
+ if(condition.wind)
+  {
+    var spawnLeaves = function()
+    {
+      for(let i = 0, n = randomRange(0, 3); i < n; i ++)
+      {
+        assets.push(new blowingLeaf());
+      }
+
       timers.wind = setTimeout(spawnLeaves, randomRange(500, 1500));
-    })();
+    };
+
+    spawnLeaves();
   }
-  if (condition.lightning) {
-    (function spawnLightning() {
-      if (randomRange(0, 10) > 7) timers.secondFlash = setTimeout(() => assets.push(new lightning()), 200);
-      assets.push(new lightning());
-      timers.lightning = setTimeout(spawnLightning, randomRange(500, 7000));
-    })();
-  }
-  animate();
-};
+  
+  if(condition.lightning)
+    {
+      let spawnLightning = function()
+      {
+        let rand = randomRange(0, 10);
+        if(rand > 7)
+        {
+          timers.secondFlash = setTimeout(function()
+          {
+            assets.push(new lightning());
+          }, 200);
+        }
+        assets.push(new lightning());
+        timers.lightning = setTimeout(spawnLightning, randomRange(500, 7000));
+      };
+  
+      spawnLightning();
+    }
+  
+    animate();
+  };
 
 /*
 |
@@ -485,7 +485,7 @@ rainDrop.prototype.draw = function() {
   context.fillStyle = rainColor;
   context.fillRect(this.x, this.y, this.width, this.height);
   if (this.y > canvas.height) {
-    if (Math.floor(Math.random() * 10) > 7) for (const i = 0, n = randomRange(3, 5); i < n; i++) assets.push(new splashDrop(this.x));
+    if (Math.floor(Math.random() * 10) > 7) for (let i = 0, n = randomRange(3, 5); i < n; i++) assets.push(new splashDrop(this.x));
     return false;
   }
   return true;
@@ -536,23 +536,83 @@ snowFlake.prototype.draw = function() {
 |
 */
 export const blowingLeaf = function() {
-  this.type = 'blowing_leaf'; this.width = randomRange(10, 20); this.height = this.width * 2.24;
-  this.xVelocity = (windSpeed - randomRange(0, 20)) / 6; this.yVelocity = this.xVelocity / 6;
-  this.rotation = Math.random() * 1; this.rotationVelocity = randomRange(-.06, .06, false);
-  this.x = this.xVelocity > 0 ? randomRange(-50, -100) : randomRange(canvas.width, canvas.width + 100);
-  this.gravity = randomRange(-0.06, 0.06, false); this.y = randomRange(canvas.height - canvas.height / 4, canvas.height);
-  this.yDirectionChangeLength = randomRange(20, 100); this.yDirectionTravelled = 0;
+  this.type = 'blowing_leaf';
+  this.width = randomRange(10, 20);
+  this.height = this.width * 2.24;
+
+  this.xVelocity = (windSpeed - randomRange(0, 20)) / 6;
+  this.yVelocity = this.xVelocity / 6;
+
+  this.rotation = Math.random() * 1;
+  this.rotationVelocity = randomRange(-.06, .06, false);
+
+  if(this.xVelocity > 0)
+  {
+    // >>>
+    this.x = randomRange(-50, -100);
+  }
+  else
+  {
+    // <<<
+    this.x = randomRange(canvas.width, canvas.width + 100);
+  }
+  
+  this.gravity = randomRange(-0.06, 0.06, false);
+  this.y = randomRange(canvas.height - canvas.height / 4, canvas.height);
+  this.yDirectionChangeLength = randomRange(20, 100);
+  this.yDirectionTravelled = 0;
 };
 
-blowingLeaf.prototype.draw = function() {
+blowingLeaf.prototype.draw = function()
+{
+  // save context
   context.save();
-  this.x += this.xVelocity; this.y += this.yVelocity;
-  this.yVelocity += this.gravity - .01; this.yDirectionTravelled++;
-  if (this.yDirectionTravelled > this.yDirectionChangeLength) { this.yDirectionTravelled = 0; this.yVelocity = randomRange(-1, 1, false); }
-  context.translate(this.x, this.y); context.rotate(this.rotation);
-  context.drawImage(imageAssets.leaf.image, -this.width / 2, -this.height / 2, this.width, this.height);
+
+  // move x and y
+  this.x += this.xVelocity;
+  this.y += this.yVelocity;
+
+  // sway
+  this.yVelocity = this.yVelocity + this.gravity + -.01;
+
+  this.yDirectionTravelled ++;
+  if(this.yDirectionTravelled > this.yDirectionChangeLength)
+  {
+    this.yDirectionTravelled = 0;
+    this.gravity *= -1;
+    this.yDirectionChangeLength = randomRange(20, 100);
+  }
+
+  // increment rotation
+  this.rotation += this.rotationVelocity;
+
+  // translate context
+  var xOffset = this.width / 2;
+  var yOffset = this.height / 2;
+
+  context.translate(this.x + xOffset, this.y + yOffset);
+  context.rotate(this.rotation);
+  context.drawImage(imageAssets.leaf.image, 0, 0, 100, 224, 0 - xOffset, 0 - yOffset, this.width, this.height);
+  
+  // restore context
   context.restore();
-  if (this.x > canvas.width + 50 || this.x < -50 || this.y > canvas.height) return false;
+
+  if(this.xVelocity > 0)
+  {
+    // >>>
+    if(this.x > canvas.width)
+    {
+      return false;
+    }
+  }
+  else
+  {
+    // <<<
+    if(this.x < -50)
+    {
+      return false;
+    }
+  }
   return true;
 };
 
@@ -561,14 +621,87 @@ blowingLeaf.prototype.draw = function() {
 |
 */
 export const lightning = function() {
-  this.type = 'lightning'; this.x = randomRange(0, canvas.width); this.y = -20;
-  this.height = randomRange(50, 100); this.width = 3;
+  this.type = 'lightning';
+  this.x = randomRange(0, canvas.width);
+  this.age = 0;
+  this.life = 20;
+  this.drawFrom = 0;
+  this.drawTo = 0;
+  this.points = [
+    [this.x, 0]
+  ];
+  this.totalPoints = 0;
+  this.opacity = .7;
+
+  this.flashed = false;
+  this.flashOpacity = 0;
+
+  var nextPointX = 0;
+  var nextPointY = 0;
+  while(nextPointY < canvas.height)
+  {
+    var lastPoint = this.points[this.points.length - 1];
+    nextPointX = lastPoint[0] > this.x ? randomRange(this.x, this.x + 15) : randomRange(this.x + 15, this.x);
+    nextPointY = lastPoint[1] + randomRange(10, 50);
+    
+    if(nextPointY > canvas.height)
+    {
+      nextPointY = canvas.height;
+    }
+
+    this.totalPoints ++;
+    this.points.push([nextPointX, nextPointY]);
+  }
 };
 
-lightning.prototype.draw = function() {
-  context.fillStyle = 'rgba(255, 255, 255, .8)'; context.fillRect(this.x, this.y, this.width, this.height);
-  return this.y < canvas.height + this.height ? (this.y += 2) : false;
- };
+lightning.prototype.draw = function()
+{
+  if(this.drawTo < this.points.length)
+  {
+    this.drawTo = this.drawTo + 2;
+    if(this.drawTo > this.points.length)
+    {
+      this.drawTo = this.points.length;
+    }
+  }
+  else
+  {
+    this.opacity = this.opacity - .02;
+
+    if(!this.flashed)
+    {
+      this.flashed = true;
+      this.flashOpacity = 1;
+    }
+  }
+
+  if(this.opacity < 0)
+  {
+    return false;
+  }
+
+  if(this.flashOpacity > 0)
+  {
+    context.fillStyle = 'rgba(255, 255, 255, ' + this.flashOpacity + ')';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    this.flashOpacity = this.flashOpacity - .1;
+  }
+
+  context.beginPath();
+  context.moveTo(this.points[this.drawFrom][0], this.points[this.drawFrom][1]);
+
+  for(var i = this.drawFrom; i < this.drawTo; i ++)
+  {
+    context.lineTo(this.points[i][0], this.points[i][1]);
+  }
+
+  context.strokeStyle = 'rgba(255, 255, 255, ' + this.opacity + ')';
+  context.lineWidth = 3;
+  context.stroke();
+
+  return true;
+};
+
 
  let state;
 
